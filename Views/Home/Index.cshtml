@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "HAPNDictionary";
+}
+@model List<Dictionary.Models.tblLanguage>
+
+<div class="dictionary-container">
+    <h1>HAPN Dictionary</h1>
+    <div class="search-box">
+        <div class="p_lang_wrap">
+            <div class="p_select_lang_wrap">
+                <label>Chọn ngôn ngữ nhập</label>
+                <select class="p_select_lang">
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.sLanguage">@item.sLanguage</option>
+                    }
+                </select>
+            </div>
+            <div class="p_select_lang_trans_wrap">
+                <label>Chọn ngôn ngữ dịch</label>
+                <select class="p_select_lang_trans">
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.sLanguage">@item.sLanguage</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="p_search_wrap">
+            <input type="text" id="search-input" placeholder="Nhấp vào đây...">
+            <button id="search-button">Tra cứu</button>
+        </div>
+        <div id="list_search"></div>
+    </div>
+    <div id="result">
+        <!-- Kết quả tra cứu sẽ hiển thị ở đây -->
+    </div>
+
+    <div class="extra_search p_popup">
+        <a href="javascript:void(0)" class="p_close"></a>
+        <script id="lbdict_plugin_frame" type="text/javascript">
+            ! function () {
+                var h = {
+                    s: "https://dict.laban.vn",
+                    w: 640,
+                    h: 400,
+                    hl: 2,
+                    th: 1
+                };
+
+                function loadScript(t, e) {
+                    var n = document.createElement("script");
+                    n.type = "text/javascript", n.readyState ? n.onreadystatechange = function () {
+                        ("loaded" === n.readyState || "complete" === n.readyState) && (n.onreadystatechange = null, e())
+                    } : n.onload = function () {
+                        e()
+                    }, n.src = t, q = document.getElementById("lbdict_plugin_frame"), q.parentNode.insertBefore(n, q)
+                }
+                setTimeout(function () {
+                    loadScript("https://stc-laban.zdn.vn/dictionary/js/plugin/lbdictplugin.frame.min.js", function () {
+                        lbDictPluginFrame.init(h)
+                    })
+                }, 1e3);
+            }();
+        </script>
+    </div>
+</div>
+
+<div class="search_history_wrap p_popup">
+    <a href="javascript:void(0)" class="p_close"></a>
+    <h3>Search history</h3>
+    <div class="search_history"></div>
+</div>
+
+<a id="p_searched" class="sidebar_popup_btn"  href="javascript:void(0);" data-tip="Recently Searched" rel="nofollow"> 
+    <svg width="26" height="26" viewBox="0 0 32 32" fill="currentColor">
+        <path d="M16 3.205c-7.066 0-12.795 5.729-12.795 12.795s5.729 12.795 12.795 12.795 12.795-5.729 12.795-12.795c0-7.066-5.729-12.795-12.795-12.795zM16 27.729c-6.467 0-11.729-5.261-11.729-11.729s5.261-11.729 11.729-11.729 11.729 5.261 11.729 11.729c0 6.467-5.261 11.729-11.729 11.729z"></path> 
+        <path d="M16 17.066h-6.398v1.066h7.464v-10.619h-1.066z"></path> 
+    </svg> 
+    <span class="p-tip-left p-tip-content">lịch sử tra cứu</span>
+</a>
